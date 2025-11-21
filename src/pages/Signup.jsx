@@ -1,12 +1,13 @@
-// src/pages/Login.jsx
+// src/pages/Signup.jsx
 import React, { useState } from "react";
-import { signInWithEmailAndPassword } from "firebase/auth";
+import { createUserWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../firebase";
 import { Link, useNavigate } from "react-router-dom";
 
-export default function Login() {
+export default function Signup() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [confirm, setConfirm] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const navigate = useNavigate();
@@ -14,9 +15,15 @@ export default function Login() {
   const submit = async (e) => {
     e.preventDefault();
     setError(null);
+
+    if (password !== confirm) {
+      setError("Пароли не совпадают");
+      return;
+    }
+
     setLoading(true);
     try {
-      await signInWithEmailAndPassword(auth, email, password);
+      await createUserWithEmailAndPassword(auth, email, password);
       navigate("/profile");
     } catch (err) {
       setError(err.message);
@@ -27,7 +34,7 @@ export default function Login() {
 
   return (
     <div className="auth-page">
-      <h2>Login</h2>
+      <h2>Sign up</h2>
       <form onSubmit={submit}>
         <input
           type="email"
@@ -43,11 +50,18 @@ export default function Login() {
           onChange={(e)=>setPassword(e.target.value)}
           required
         />
-        <button type="submit" disabled={loading}>{loading ? "Logging..." : "Login"}</button>
+        <input
+          type="password"
+          placeholder="Confirm password"
+          value={confirm}
+          onChange={(e)=>setConfirm(e.target.value)}
+          required
+        />
+        <button type="submit" disabled={loading}>{loading ? "Signing..." : "Sign up"}</button>
       </form>
 
       {error && <p style={{color: "red"}}>{error}</p>}
-      <p>Нет аккаунта? <Link to="/signup">Sign up</Link></p>
+      <p>Есть аккаунт? <Link to="/login">Login</Link></p>
     </div>
   );
 }

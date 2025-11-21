@@ -1,4 +1,4 @@
-// components/CharacterCard.jsx
+
 
 import React from 'react';
 import { Link } from 'react-router-dom';
@@ -13,7 +13,7 @@ const CharacterCard = ({ character }) => {
             <div className="card-info">
                 <h3>{character.name}</h3>
                 
-                {/* Динамический статус с классом */}
+               
                 <span className={`card-status ${statusClass}`}>
                     {character.status}
                 </span>

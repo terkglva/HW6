@@ -1,4 +1,4 @@
-// src/components/ErrorBox.jsx
+
 
 import React from 'react';
 
@@ -8,7 +8,7 @@ const ErrorBox = ({ message }) => {
         margin: '20px auto',
         maxWidth: '500px',
         backgroundColor: 'rgba(163, 0, 0, 0.15)', // Темно-красный фон
-        border: '1px solid #a30000', // Красная рамка
+        border: '1px solid #a30000', 
         color: '#ffcccc',
         borderRadius: '8px',
         textAlign: 'center',

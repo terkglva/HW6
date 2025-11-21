@@ -1,14 +1,15 @@
-// components/NavBar.jsx
+// src/components/NavBar.jsx
 
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
+import { useAuth } from '../context/AuthContext';
 
 const NavBar = () => {
     const location = useLocation();
+    const { user, logout } = useAuth();
 
-    // Использование переменных из index.css через inline-стили
     const navStyle = {
-        backgroundColor: 'var(--color-nav-bg)', // #111111
+        backgroundColor: 'var(--color-nav-bg)',
         padding: '15px 40px',
         display: 'flex',
         justifyContent: 'space-between',
@@ -32,6 +33,7 @@ const NavBar = () => {
     const linkContainerStyle = {
         display: 'flex',
         gap: '25px',
+        alignItems: 'center',
     };
 
     const linkStyle = (path) => ({
@@ -43,6 +45,19 @@ const NavBar = () => {
         paddingBottom: '3px',
     });
 
+    const logoutButtonStyle = {
+        backgroundColor: '#a30000',
+        color: 'white',
+        border: 'none',
+        padding: '8px 15px',
+        borderRadius: '6px',
+        cursor: 'pointer',
+        textTransform: 'uppercase',
+        fontSize: '0.85rem',
+        fontWeight: '700',
+        transition: 'all 0.3s ease',
+    };
+
     return (
         <nav style={navStyle}>
             <Link to="/" style={logoStyle}>
@@ -52,16 +67,38 @@ const NavBar = () => {
                 <Link to="/" style={linkStyle('/')}>
                     Home
                 </Link>
-                {/* 🔴 ИСПРАВЛЕНИЕ: Путь изменен с /characters на /items, согласно App.jsx */}
                 <Link to="/items" style={linkStyle('/items')}>
                     Characters
                 </Link>
                 <Link to="/about" style={linkStyle('/about')}>
                     About
                 </Link>
-                <Link to="/login" style={linkStyle('/login')}>
-                    Login
-                </Link>
+                
+                {/* Показываем разные ссылки в зависимости от авторизации */}
+                {user ? (
+                    <>
+                        <Link to="/profile" style={linkStyle('/profile')}>
+                            Profile
+                        </Link>
+                        <button 
+                            onClick={logout} 
+                            style={logoutButtonStyle}
+                            onMouseEnter={(e) => e.target.style.backgroundColor = '#d10000'}
+                            onMouseLeave={(e) => e.target.style.backgroundColor = '#a30000'}
+                        >
+                            Logout
+                        </button>
+                    </>
+                ) : (
+                    <>
+                        <Link to="/login" style={linkStyle('/login')}>
+                            Login
+                        </Link>
+                        <Link to="/signup" style={linkStyle('/signup')}>
+                            Sign Up
+                        </Link>
+                    </>
+                )}
             </div>
         </nav>
     );

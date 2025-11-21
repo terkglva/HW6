@@ -3,7 +3,7 @@
 import React from 'react';
 
 const Spinner = () => {
-    // Стиль загрузки в виде зеленого портала
+    
     const spinnerStyle = {
         border: '4px solid rgba(104, 237, 41, 0.1)',
         borderTop: '4px solid #68ed29', // Портальный зеленый
@@ -14,7 +14,7 @@ const Spinner = () => {
         margin: '50px auto',
     };
     
-    // Внимание: анимацию 'spin' нужно добавить в index.css
+    
     
     return (
         <div style={{textAlign: 'center'}}>
