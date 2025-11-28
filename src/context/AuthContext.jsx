@@ -29,7 +29,7 @@ export const AuthProvider = ({ children }) => {
     const signup = (email, password) =>
         createUserWithEmailAndPassword(auth, email, password);
 
-    const logout = () => signOut(auth);
+    const logout = () => signOut(auth); //удаляет токен 
 
     return (
         <AuthContext.Provider value={{ user, login, signup, logout }}>
