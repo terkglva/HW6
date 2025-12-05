@@ -1,3 +1,4 @@
+// src/context/AuthContext.jsx (UPDATED)
 import { createContext, useContext, useEffect, useState } from "react";
 import { auth } from "../firebase"; 
 import {
@@ -13,7 +14,7 @@ export const AuthProvider = ({ children }) => {
     const [user, setUser] = useState(null);
     const [loading, setLoading] = useState(true);
 
-    // Отслеживаем пользователя
+    // Monitor auth state changes
     useEffect(() => {
         const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
             setUser(currentUser);
@@ -29,13 +30,19 @@ export const AuthProvider = ({ children }) => {
     const signup = (email, password) =>
         createUserWithEmailAndPassword(auth, email, password);
 
-    const logout = () => signOut(auth); //удаляет токен 
+    const logout = () => signOut(auth);
 
     return (
-        <AuthContext.Provider value={{ user, login, signup, logout }}>
+        <AuthContext.Provider value={{ user, loading, login, signup, logout }}>
             {!loading && children}
         </AuthContext.Provider>
     );
 };
 
-export const useAuth = () => useContext(AuthContext);
+export const useAuth = () => {
+    const context = useContext(AuthContext);
+    if (!context) {
+        throw new Error('useAuth must be used within AuthProvider');
+    }
+    return context;
+};

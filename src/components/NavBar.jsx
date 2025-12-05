@@ -1,5 +1,4 @@
-// src/components/NavBar.jsx
-
+// src/components/NavBar.jsx (UPDATED)
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
@@ -70,11 +69,13 @@ const NavBar = () => {
                 <Link to="/items" style={linkStyle('/items')}>
                     Characters
                 </Link>
+                <Link to="/favorites" style={linkStyle('/favorites')}>
+                    Favorites ❤️
+                </Link>
                 <Link to="/about" style={linkStyle('/about')}>
                     About
                 </Link>
                 
-                {/* Показываем разные ссылки в зависимости от авторизации */}
                 {user ? (
                     <>
                         <Link to="/profile" style={linkStyle('/profile')}>
